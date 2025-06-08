@@ -26,17 +26,15 @@ public class Address {
     @Size(max = 2)
     @Column(name = "country", length = 2, nullable = false)
     private String country;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Address address = (Address) o;
-        return Objects.equals(address1, address.address1) &&
-                Objects.equals(address2, address.address2) &&
-                Objects.equals(city, address.city) &&
-                Objects.equals(postcode, address.postcode) &&
-                Objects.equals(country, address.country);
+        return Objects.equals(address1, address.address1) && Objects.equals(address2, address.address2) && Objects.equals(city, address.city) && Objects.equals(postcode, address.postcode) && Objects.equals(country, address.country);
     }
+
     @Override
     public int hashCode() {
         return Objects.hash(address1, address2, city, postcode, country);

@@ -1,11 +1,13 @@
 package controllers;
 import dto.PaymentDto;
+import io.quarkus.security.Authenticated;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.*;
 import services.PaymentService;
 
 import java.util.List;
 
+@Authenticated
 @Path("/payments")
 public class PaymentController {
     @Inject

@@ -1,14 +1,35 @@
 version: "3.8"
 
 services:
-  app:
-    build:
-      context: .
-      dockerfile: src/main/docker/Dockerfile.jvm
-    image: nebrass/sample-jvm:1.0.0-SNAPSHOT
+  postgres:
+    env_file:
+      - .env
+    image: postgres:17
+    restart: always
+    environment:
+      POSTGRES_DB: dev
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
     ports:
-      - "8080:8080"
-    restart: on-failure
+      - "5432:5432"
+    networks:
+      - app-network
+  keycloak:
+    image: quay.io/keycloak/keycloak:24.0.1
+    restart: always
+    command: start-dev
+    environment:
+      KC_DB: postgres
+      KC_DB_URL_HOST: postgres
+      KC_DB_URL_DATABASE: keycloak
+      KC_DB_USERNAME: postgres
+      KC_DB_PASSWORD: password
+      KEYCLOAK_ADMIN: admin
+      KEYCLOAK_ADMIN_PASSWORD: admin
+    ports:
+      - "9080:8080"
+    depends_on:
+      - postgres
     networks:
       - app-network
 
